@@ -1,7 +1,10 @@
 <template>
   <div class="currentsong sticky-top">
     <div class="currentsong-background position-relative">
-      <div class="currentsong-backgroundimage position-absolute"></div>
+      <div
+        class="currentsong-backgroundimage position-absolute"
+        :style="{ backgroundImage: 'url(' + song.thumb + ')' }"
+      ></div>
       <div
         class="song-info d-flex justify-content-center align-items-center py-5"
       >
