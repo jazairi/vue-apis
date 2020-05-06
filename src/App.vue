@@ -1,24 +1,32 @@
 <template>
-  <div id="app" class="container">
-    <h1 class="text-primary mt-3">Music app</h1>
-    <p>
-      <font-awesome-icon icon="trash" />
-      Modern hard rock
-    </p>
-  </div>
+  <div id="app"><current-song :song="currentSong" /></div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+//import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import CurrentSong from "./components/CurrentSong";
+
 export default {
   name: "app",
+  data() {
+    return {
+      currentSong: {
+        name: "Modern hard rock",
+        description:
+          "Powerful rock track with cool guitar riffs, energetic groovy drums, tight bass and guitar solo. Perfect for use in sport (like boxing) videos, advertisements etc."
+      }
+    };
+  },
   components: {
-    FontAwesomeIcon
+    //FontAwesomeIcon,
+    CurrentSong
   }
 };
 </script>
 
 <style lang="scss">
+// Note: normally you'd split CSS into individual components
+
 @import url("https://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans:300&display=swap");
 
 // colors
