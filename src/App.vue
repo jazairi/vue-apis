@@ -13,6 +13,7 @@
 <script>
 import CurrentSong from "./components/CurrentSong";
 import SongList from "./components/SongList";
+import axios from "axios";
 import _ from "lodash";
 
 export default {
@@ -53,12 +54,19 @@ export default {
     },
   },
   created() {
+    axios
+      .get("./data.json")
+      .then((response) => (this.songs = response.data))
+      .catch((error) => console.log(error));
+    // Fetch isn't compatible with IE and other older browsers
+    /*
     fetch("./data.json"), {
       .then((response) => response.json())
       .then((response) => {
         this.songs = response;
       })
       .catch((error) => console.log(error));
+    */
   },
   components: {
     CurrentSong,
