@@ -13,7 +13,6 @@
 <script>
 import CurrentSong from "./components/CurrentSong";
 import SongList from "./components/SongList";
-import _ from "lodash";
 import { mapState } from "vuex";
 
 export default {
@@ -43,16 +42,14 @@ export default {
           this.audioElement.play();
         }
       }
-      this.currentSong = payload;
+      this.$store.dispatch("changeSong", payload);
       this.audioElement.addEventListener("ended", () => {
-        this.currentSong = null;
-        this.audioElement = null;
+        this.$store.dispatch("changeSong", null);
+        this.audioElemetn = null;
       });
     },
     handleDelete: function(payload) {
-      // If we were using a more complex API/app, we could use axios.delete here
-      const updatedArray = _.without(this.songs, payload);
-      this.songs = updatedArray;
+      this.$store.dispatch("deleteSong", payload);
     },
   },
   created() {
