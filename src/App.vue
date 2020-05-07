@@ -49,24 +49,19 @@ export default {
       });
     },
     handleDelete: function(payload) {
+      // If we were using a more complex API/app, we could use axios.delete here
       const updatedArray = _.without(this.songs, payload);
       this.songs = updatedArray;
     },
   },
   created() {
-    axios
-      .get("./data.json")
+    axios({
+      method: "get",
+      url: "https://orangevalleycaa.org/api/music",
+      params: { order: "name" },
+    })
       .then((response) => (this.songs = response.data))
       .catch((error) => console.log(error));
-    // Fetch isn't compatible with IE and other older browsers
-    /*
-    fetch("./data.json"), {
-      .then((response) => response.json())
-      .then((response) => {
-        this.songs = response;
-      })
-      .catch((error) => console.log(error));
-    */
   },
   components: {
     CurrentSong,
