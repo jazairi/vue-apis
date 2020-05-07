@@ -40,7 +40,7 @@ export default {
   name: "song-list",
   props: ["songs", "currentSong"],
   components: {
-    FontAwesomeIcon,
-  },
+    FontAwesomeIcon
+  }
 };
 </script>

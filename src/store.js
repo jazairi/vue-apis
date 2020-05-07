@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     songs: [],
-    currentSong: null,
+    currentSong: null
   },
   mutations: {
     SET_SONGS(state, payload) {
@@ -16,7 +16,7 @@ export default new Vuex.Store({
     },
     CHANGE_CURRENT_SONG(state, payload) {
       state.currentSong = payload;
-    },
+    }
   },
   actions: {
     changeSong({ commit }, payload) {
@@ -26,7 +26,7 @@ export default new Vuex.Store({
       axios({
         method: "get",
         url: "https://orangevalleycaa.org/api/music",
-        params: { order: "name" },
+        params: { order: "name" }
       })
         .then((response) => commit("SET_SONGS", response.data))
         .catch((error) => console.log(error));
@@ -34,6 +34,6 @@ export default new Vuex.Store({
     deleteSong({ commit }, payload) {
       let songs = _.without(this.state.songs, payload);
       commit("SET_SONGS", songs);
-    },
-  },
+    }
+  }
 });

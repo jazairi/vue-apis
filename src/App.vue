@@ -13,20 +13,19 @@
 <script>
 import CurrentSong from "./components/CurrentSong";
 import SongList from "./components/SongList";
-import { mapState } from "vuex";
+import db from "./db.js";
 
 export default {
   name: "app",
   data() {
     return {
+      currentSong: null,
       audioElement: null,
+      songs: []
     };
   },
-  computed: {
-    ...mapState(["songs", "currentSong"]),
-  },
   methods: {
-    handlePlay: function(payload) {
+    handlePlay: function (payload) {
       if (this.audioElement == null) {
         this.audioElement = new Audio(payload.music_url);
         this.audioElement.play();
@@ -42,23 +41,37 @@ export default {
           this.audioElement.play();
         }
       }
-      this.$store.dispatch("changeSong", payload);
+      this.currentSong = payload;
       this.audioElement.addEventListener("ended", () => {
-        this.$store.dispatch("changeSong", null);
-        this.audioElemetn = null;
+        this.currentSong = null;
+        this.audioElement = null;
       });
     },
-    handleDelete: function(payload) {
-      this.$store.dispatch("deleteSong", payload);
-    },
+    handleDelete: function (payload) {
+      db.collection("songs").doc(payload.id).delete();
+    }
   },
-  created() {
-    this.$store.dispatch("fetchSongs");
+  mounted() {
+    db.collection("songs").onSnapshot((snapshot) => {
+      const snapData = [];
+      snapshot.forEach((doc) => {
+        snapData.push({
+          id: doc.id,
+          name: doc.data().name,
+          music_url: doc.data().music_url,
+          description: doc.data().description,
+          image: doc.data().image,
+          thumb: doc.data().thumb,
+          created_by: doc.data().created_by
+        });
+      });
+      this.songs = snapData;
+    });
   },
   components: {
     CurrentSong,
-    SongList,
-  },
+    SongList
+  }
 };
 </script>
 

@@ -26,6 +26,6 @@
 <script>
 export default {
   name: "current-song", // Why did he choose kebob case for this?
-  props: ["song"],
+  props: ["song"]
 };
 </script>
